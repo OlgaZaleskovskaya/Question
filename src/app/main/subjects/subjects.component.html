@@ -1,0 +1,51 @@
+<div class="container bg-light  border ">
+  <div class="row ">
+    <nav class="navbar navbar-expand-sm  col-9">
+      <ul class="navbar-nav">
+        <li class="nav-item  p-2" *ngFor="let item of subjectList; let i = index" (click)="onSelect( item)"
+          [class.selected]="item.id == currentId">{{item.name | uppercase}}
+        </li>
+      </ul>
+    </nav>
+   
+    <div class="my-auto col-3 text-right">
+      <div class="dropdown show" *ngIf="pageService.isLogin && !isOpened">
+        <button class="btn btn-sm but dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          Manage Categories
+        </button>
+        <div class="dropdown-menu" dropDown aria-labelledby="dropdownMenuButton">
+          <a class="dropdown-item btn dropdownItem" 
+          appHighLight (click)="showModal('Add new subject')" role="button">New</a>
+          <a
+           class="dropdown-item btn dropdownItem" 
+           appHighLight (click)="showModal('Remove')" role="button">Remove</a>
+          <a
+           class="dropdown-item btn dropdownItem" 
+           appHighLight (click)="showModal('Edit')" role="button">Edit</a>
+
+        </div>
+      </div>
+      <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'new'" *ngIf="toDo == 'new'">New
+        subject
+      </button>
+      <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'remove'"
+        *ngIf="toDo == 'remove'">Remove  {{pageService.currentSubject.name}}
+      </button>
+      <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'edit'" *ngIf="toDo == 'edit'">Edit
+        {{pageService.currentSubject.name}}
+      </button>
+    </div>
+
+    <app-add-subject-modal *ngIf="isOpened"
+     (onClose)="onCloseModal($event)"
+     [currentSubjectName] = "currentSubjectName"
+      [toDo]="toDo" 
+      (onAddSubject)="onAddSubject($event)">
+    </app-add-subject-modal>
+
+  </div>
+</div>
+
+<app-sub-subjects  [currentSubjectId]="currentId">
+</app-sub-subjects>

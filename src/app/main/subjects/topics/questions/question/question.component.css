@@ -1,0 +1,35 @@
+div.answer {
+height: 5px;
+}
+
+div.mainDiv{
+    border:1px solid rgb(226, 225, 225);
+    border-left: 0;
+    border-right: 0;
+}
+
+div.question{
+    cursor:pointer;
+}
+
+div.answer{
+overflow: auto;
+
+}
+
+button.but{
+    margin-top:1rem;
+    background-color:#007BFF;
+    color: white;
+    border: 1px solid rgb(182, 217, 250);
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+         box-shadow: 0 10px 6px -6px #777;
+ }
+ 
+ button.selectedButton{
+    background-color: rgb(52, 64, 94);
+    -webkit-box-shadow: 0 5px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+         box-shadow: 0 5px 3px -3px #777;
+ }

@@ -1,0 +1,14 @@
+<div class="modal1 rounded">
+  <div class="text-center" >
+      <p >Add new topic to {{currentTopic.name | uppercase}}</p>
+      <input type="text" (change)="question = $event.target.value;" /> 
+      <input type="text" (change)="answer = $event.target.value;" /> 
+  </div>
+
+<div class="text-center">
+  <button type="button"  class="btn but btn-sm" (click)="onSubmit()">OK</button>
+  <button type="button" class="btn but btn-sm" (click)="onCancel()">Cancel</button>
+</div>
+
+</div>
+<div class="overlay"></div>

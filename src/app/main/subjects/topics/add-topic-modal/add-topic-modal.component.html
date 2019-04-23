@@ -1,0 +1,15 @@
+<div class="modal1 rounded">
+  to do: {{toDo}}
+    <div class="text-center" >
+     <p >Add new topic to {{pageService.currentSubSubject.name | uppercase}}</p>
+        <input type="text" [(ngModel)]="newName" /> 
+    </div>
+  
+  <div class="text-center">
+    <button type="button"  class="btn btn-success btn-sm m-1" *ngIf = "toDo != 'remove'"(click)="onSubmit()">OK</button>
+    <button type="button"  class="btn btn-danger btn-sm m-1" *ngIf = "toDo == 'remove'" (click)="onSubmit()">Remove</button>
+    <button type="button" class="btn btn-info btn-sm m-1" (click)="onCancel()">Cancel</button>
+  </div>
+  
+  </div>
+  <div class="overlay"></div>

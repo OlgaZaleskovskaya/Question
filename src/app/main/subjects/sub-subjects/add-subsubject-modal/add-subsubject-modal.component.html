@@ -1,0 +1,19 @@
+<div class="modal1 rounded">
+  <div class="text-center">
+
+    <p>{{toDo  | uppercase}} </p>
+    <input type="text" [(ngModel)]="newName" [readonly] = "isDisable" />
+  </div>
+
+  <div class="text-center">
+    <button type="button" *ngIf="toDo != 'remove'" class="btn btn-success btn-small m-1" (click)="onSubmit()">
+      OK</button>
+    <button type="button" *ngIf="toDo == 'remove'" class="btn btn-danger btn-small m-1"
+      (click)="onSubmit()">Remove</button>
+    <button type="button" class="btn btn-info btn-small m-1" (click)="onCancel()">Cancel</button>
+
+
+  </div>
+
+</div>
+<div class="overlay"></div>

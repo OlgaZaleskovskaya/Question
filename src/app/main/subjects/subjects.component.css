@@ -1,0 +1,43 @@
+li.selected{
+    color: white;
+    background-color: rgb(52, 64, 94);
+    border-color: rgb(77, 164, 245);
+}
+li {
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 300;
+    margin-left: 2px;
+   border: 2px solid rgb(182, 217, 250);
+}
+
+.popup {
+   z-index: 10; 
+}
+
+button.but{
+   display: inline;
+   background-color:#007BFF;
+   color: white;
+   border: 1px solid rgb(182, 217, 250);
+   -webkit-box-shadow: 0 10px 6px -6px #777;
+   -moz-box-shadow: 0 10px 6px -6px #777;
+   box-shadow: 0 10px 6px -6px #777;
+   font-size: 0.8em;
+}
+
+button.selectedButton{
+   background-color: rgb(102, 15, 7);
+   -webkit-box-shadow: 0 5px 6px -6px #777;
+   -moz-box-shadow: 0 10px 6px -6px #777;
+        box-shadow: 0 5px 3px -3px #777;
+     
+       
+
+}
+a.dropdownItem{
+
+   font-size: 0.8rem;
+}
+
+

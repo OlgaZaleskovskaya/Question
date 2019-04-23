@@ -1,0 +1,61 @@
+<div class="container mainDiv ">
+  
+  <div class="row">
+      
+    <div class="col-3 itemList  p-0">
+      <div class="my-auto text-right">
+          <div class="dropdown show" *ngIf="pageService.isLogin && !isOpened">
+            <button class="btn btn-sm but dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Manage Topics
+            </button>
+            <div class="dropdown-menu" dropDown aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item btn dropdownItem" appHighLight (click)="showModal('new')" role="button">New</a>
+              <a class="dropdown-item btn dropdownItem" appHighLight (click)="showModal('remove')" role="button">Remove</a>
+              <a class="dropdown-item btn dropdownItem" appHighLight (click)="showModal('edit')" role="button">Edit</a>
+    
+            </div>
+          </div>
+          <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'new'" *ngIf="toDo == 'new'">New
+              {{currentTopic.name}}
+          </button>
+          <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'remove'"
+            *ngIf="toDo == 'remove'">Remove  {{currentTopic.name}}
+          </button>
+          <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'edit'" *ngIf="toDo == 'edit'">Edit
+              {{currentTopic.name}}
+          </button>
+        </div>
+      <ul class="list-group  m-0">
+        <li class="list-group-item mt-1 p-1" *ngFor="let item of topicList; let i = index"
+          (click)="onSelect(item.id, item)" [class.selected]="item.id == currentId">
+
+          {{item.name}}
+        </li>
+      </ul>
+      <!-- <div class="my-auto">
+        <div class="mt-3">
+          <button type="button" class="btn btn-sm  but" *ngIf="pageService.isLogin" (click)="showModal('new')"
+            [class.selectedButton]="toDo == 'new'">New
+          </button>
+          <button type="button" class="btn  btn-sm but" *ngIf="pageService.isLogin" (click)="showModal('remove')"
+            [class.selectedButton]="toDo == 'remove'">Remove</button>
+          <button type="button" class="btn  btn-sm  but" *ngIf="pageService.isLogin" (click)="showModal('edit')"
+            [class.selectedButton]="toDo == 'edit'">Edit</button>
+
+        </div>
+       
+      </div> -->
+    </div>
+ <app-add-topic-modal  [currentName]="currentName" [toDo]="toDo"
+          *ngIf="isOpened" (onClose)="onCloseModal($event)" (onAddTopic)="addTopic($event)">
+        </app-add-topic-modal>
+
+
+    <div class="col-9">
+
+      <app-questions [currentTopicId]="currentTopic.id"></app-questions>
+    </div>
+  </div>
+
+</div>

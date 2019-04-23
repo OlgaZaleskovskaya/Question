@@ -1,0 +1,19 @@
+<div class="modalWindow rounded p-5">
+    <div class="text-center">
+        <p>{{toDo}}
+            &nbsp; <span *ngIf="toDo != 'Add new subject'"> {{pageService.currentSubject.name}}</span>
+        </p>
+        <!--  <input type="text" (change)="newName = $event.target.value;" />  -->
+        <input *ngIf = "toDo !='Remove'" class = "form-control" type="text" [(ngModel)]="currentSubjectName"  />
+    </div>
+
+    <div class="text-center mt-2">
+        <button type="button" *ngIf="toDo != 'Remove'" class="btn but btn-small m-1"
+            (click)="onSubmit()">OK</button>
+        <button type="button" *ngIf="toDo == 'Remove'" class="btn but btn-small m-1 bg-danger"
+            (click)="onSubmit()">Remove</button>
+        <button type="button" class="btn btn-info but m-1" (click)="onCancel()">Cancel</button>
+    </div>
+
+</div>
+<div class="overlay"></div>

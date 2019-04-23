@@ -1,0 +1,59 @@
+<div class="container border ">
+  <div class="row">
+  
+    <nav class="navbar navbar-expand-sm  main col-9">
+      <ul class="navbar-nav">
+        <li [class.selected]="item.id == currentId" class="nav-item " *ngFor="let item of subSubjectList; let i = index" (click)="onSelect(item.id, item)">
+      {{item.name | uppercase}}
+        </li>
+      </ul>
+    </nav>
+    
+    <div class="my-auto col-3 text-right">
+        <div class="dropdown " *ngIf="pageService.isLogin && !isOpened">
+          <button class="btn btn-sm but dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Manage Subcategories
+          </button>
+          <div class="dropdown-menu" dropDown aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item btn dropdownItem" appHighLight (click)="showModal('new')" role="button">New</a>
+            <a class="dropdown-item btn dropdownItem" appHighLight (click)="showModal('remove')" role="button">Remove</a>
+            <a class="dropdown-item btn dropdownItem" appHighLight (click)="showModal('edit')" role="button">Edit</a>
+  
+          </div>
+        </div>
+        <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'new'" *ngIf="toDo == 'new'">New
+            {{currentSubSubject.name}}
+        </button>
+        <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'remove'"
+          *ngIf="toDo == 'remove'">Remove {{currentSubSubject.name}}
+        </button>
+        <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'edit'" *ngIf="toDo == 'edit'">Edit
+          {{currentSubSubject.name}}
+        </button>
+      </div>
+
+    <!-- <div>
+      <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'new'" *ngIf="pageService.isLogin"
+        (click)="showModal('new')">New
+      </button>
+      <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'remove'"
+        *ngIf="pageService.isLogin" (click)="showModal('remove')">Remove
+      </button>
+
+      <button type="button" class="btn  btn-sm but" [class.selectedButton]="toDo == 'edit'" *ngIf="pageService.isLogin"
+        (click)="showModal('edit')">Edit
+      </button>
+    </div> -->
+  </div>
+
+ <app-topics [currentSubSubjectId]="currentId" [currentSubSubject]="currentSubSubject"></app-topics>
+
+
+  <app-add-subsubject-modal 
+ *ngIf="isOpened" 
+  [toDo]="toDo"
+  [currentSubSubject]="currentItem"
+  (onClose)="onCloseModal($event)"
+    (onAddSubSubject)="addSubSubject($event)">
+  </app-add-subsubject-modal>

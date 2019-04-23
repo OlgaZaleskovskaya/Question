@@ -1,0 +1,38 @@
+<div class="container">
+   <p>{{pageService.currentSubject.name}}->{{pageService.currentSubSubject.name}} -> {{pageService.currentTopic.name}}
+  </p>
+
+  <app-question [question]="item" [index]=i 
+  (onRemoveQuestion)="onRemoveQuestion($event)"
+    (onEditQuestion)="onEditQuestion($event)"
+     *ngFor="let item of questionList  | async; let i = index">
+  </app-question>
+  <!-- pagination -->
+
+  <!-- <div class="bg-light">
+   <div class="form-group">
+            <label for="questionsPerPage">Questions Per Page</label>
+            <input type="text" 
+            class="form-control" 
+            [(ngModel)] = "pageSize" 
+            id="questionsPerPage">
+        </div>
+        <div class="btn-group mt-2">
+            <button type="button" 
+            class="btn btn-outline-danger" 
+            [class.active]="page == selectedPageNumber"
+                *ngFor="let page of pages" 
+                (click)="changePage(page)">{{page}}</button>
+        </div> 
+        </div> -->
+  <div class="my-auto ">
+    <button type="button" class="btn but btn-sm mt-3" *ngIf="pageService.isLogin" (click)="showModal()">New
+      Question</button>
+
+    <!-- for adding new question -->
+    <app-edit-question-modal [currentMessage]="message" [question]="empty" *ngIf="isOpened"
+      (onSubmit)="onSubmit($event)" (onCancel)="onCancel($event)">
+    </app-edit-question-modal>
+
+  </div>
+</div>
