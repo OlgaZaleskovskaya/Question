@@ -1,75 +1,75 @@
 import { Injectable } from '@angular/core';
-import { QuestionLong } from './QuestionLong.model';
+
 import { Observable, from, Subject, of, fromEvent, iif } from "rxjs";
-import { Topic } from './topic.model';
+import { Topic } from './models/topic.model';
 import { TopicsComponent } from '../main/subjects/topics/topics.component';
-import { Subj } from './subj.model';
+import { Subj } from './models/subj.model';
 import { Question } from './question.model';
 import { QuestionResponse } from './questionResponse.model';
-import { SubSubject } from './subSubject.model';
+import { SubSubject } from './models/subSubject.model';
 
 import { HttpClient } from '@angular/common/http';
 import { map, filter, tap, take, toArray, mapTo, mergeMap, concatMap, defaultIfEmpty } from 'rxjs/operators';
-import { validateStyleParams } from '@angular/animations/browser/src/util';
-import { QuestionAnswer } from './QuestionAnswer.model';
+import { QuestionAnswer } from './models/QuestionAnswer.model';
+import { AuthService } from './services/auth.service';
+import { User } from './models/user.model';
+import { Message } from './models/message.model';
 
 @Injectable()
 export class TempoDataSource {
     private subjects: Subj[];
     private subjects1: Subj[];
     private questionList: QuestionAnswer[];
-    private subSubjects: SubSubject[];
-    private subSubjects1: SubSubject[];
-    private subSubjects2: SubSubject[];
-    private subSubjects3: SubSubject[];
     private subSubs: SubSubject[];
     private topics: Topic[];
-    private topics1: Topic[];
-    private topics2: Topic[];
-    private topics3: Topic[];
-    private topics4: Topic[];
-    private topics5: Topic[];
-    private topics6: Topic[];
-    private topics7: Topic[];
-    private topics8: Topic[];
-    private topics9: Topic[];
+    private users: User[];
+    private messageList: Message[];
+
     private smth: Observable<any>;
 
-    private questionLong: QuestionLong[];
+
     url = "https://questionary-d6795.firebaseio.com/";
-    constructor(private http: HttpClient
+    constructor(private http: HttpClient, private authSevice: AuthService
     ) {
         this.subjects = [];
+        this.questionList = <Array<QuestionAnswer>>[];
+
 
     };
 
-    getQuestions1(subjectId: string,
-        subSubjectId: string,
-        topicId: string,
-        pageNumber: number,
-        pageSize: number):
-        Observable<QuestionResponse> {
-        let tempo = this.questionLong
-            .filter((item, index, array) => item.subject == subjectId
-                && item.subSubject == subSubjectId && item.topic == topicId)
-            .map(item => new Question(item.id, item.question, item.answer));
-        let res = tempo.filter((item, index, array) => index >= (pageNumber - 1) * pageSize
-            && index < pageNumber * pageSize);
-        const quantity = tempo.length;
-        let result = new QuestionResponse(quantity, res);
-        return from([result]);
-    }
 
 
-    getQuestions(topicId: string): Observable<QuestionAnswer[]> {
+    getQuestions(topicId: string, pageNumber: number, pageSize: number): Observable<Object> {
         let obs = this.http.get("https://questionary-d6795.firebaseio.com/questions.json");
+        const emptyArray = from(<Array<QuestionAnswer>>[]);
+console.log("get questions on init");
         return obs.pipe(
-            tap(val => this.questionList = <Array<QuestionAnswer>>val),
-            mergeMap(val => from(<Array<QuestionAnswer>>val)),
+            //  mergeMap((val => iif(() => val == null, emptyArray, of(<Array<QuestionAnswer>>val) )))),
+            tap(
+           val => this.questionList = <Array<QuestionAnswer>>val
+               
+            ),
+            mergeMap(val => {
+                if (val) { return from(<Array<QuestionAnswer>>val) }
+                else {
+                    return emptyArray
+                }
+            }
+            ),
             filter(val => val['topicId'] == topicId),
             toArray(),
-            mergeMap(val => iif(() => val.length == 0, of([new QuestionAnswer("n/a", "n/a", "n/a")]), of(val))));
+            map(val => ({
+                'amount': val.length, "array": val.filter(function (item, index, arr) {
+                    return index >= (pageNumber - 1) * pageSize
+                        && index < pageNumber * pageSize;
+                }
+                )
+            }
+            )),
+        );
 
+        // mergeMap(val => iif(() => val.length == 0,
+        //     of([new QuestionAnswer("n/a", "n/a", "n/a")]), of(val))));
     }
 
 
@@ -83,10 +83,11 @@ export class TempoDataSource {
             }));
     }
     addSubject(name: string): Observable<string> {
+        const token = this.authSevice.getToken();
         const id = "s_" + name.toLowerCase();
         const newSubj = new Subj(id, name.toLowerCase());
         this.subjects.push(newSubj);
-        return this.http.put("https://questionary-d6795.firebaseio.com/subjects.json", this.subjects)
+        return this.http.put("https://questionary-d6795.firebaseio.com/subjects.json?auth=" + token, this.subjects)
             .pipe(map(val => "add"));
     }
     // ------------to be removed--------------
@@ -133,7 +134,7 @@ export class TempoDataSource {
 
 
 
-// ------------mapulation with subSubjects------------------
+    // ------------mapulation with subSubjects------------------
     saveSubSubs() {
         return this.http.put("https://questionary-d6795.firebaseio.com/subSubjects.json", this.subSubs);
     }
@@ -176,8 +177,9 @@ export class TempoDataSource {
             .pipe(map(val => val = "removed"));
 
     }
-// ---------end of mapulation with subSubjects------------------
-// ------------mapulation with topics------------------
+    // ---------end of mapulation with subSubjects------------------
+
+    // ------------mapulation with topics------------------
     addTopic(subSubId: string, topicName: string): Observable<string> {
         const id = subSubId + "-" + topicName.toLowerCase();
         this.topics.push(new Topic(id, subSubId, topicName.toLowerCase()));
@@ -207,6 +209,18 @@ export class TempoDataSource {
         return this.http.put("https://questionary-d6795.firebaseio.com/topics.json", this.topics)
             .pipe(map(val => val = id));
     }
+    getTopics(subSubId: string): Observable<any> {
+        let obs = this.http.get("https://questionary-d6795.firebaseio.com/topics.json");
+        return obs.pipe(
+            tap(v => this.topics = <Array<Topic>>v),
+            mergeMap(val => from(<Array<Topic>>val)),
+            filter(val => val['subSubjectId'] == subSubId),
+            toArray(),
+            mergeMap(v => iif(() => v.length == 0, of([new Topic("n/a", "n/a", "no topics")]), of(v))));
+    }
+
+    // --------end of mapulation with topics------------------
+
 
     // method to be removed 
     saveTopics() {
@@ -218,23 +232,21 @@ export class TempoDataSource {
         return this.http.put("https://questionary-d6795.firebaseio.com/questions.json", this.questionList);
     }
 
-    getTopics(subSubId: string): Observable<any> {
-        let obs = this.http.get("https://questionary-d6795.firebaseio.com/topics.json");
-        return obs.pipe(
-            tap(v => this.topics = <Array<Topic>>v),
-            mergeMap(val => from(<Array<Topic>>val)),
-            filter(val => val['subSubjectId'] == subSubId),
-            toArray(),
-          
-            mergeMap(v => iif(() => v.length == 0, of([new Topic("n/a", "n/a", "no topics")]), of(v))));
-    }
+
+
 
     addQuestion(q: QuestionAnswer): Observable<string> {
         let id = "";
         q.id = this.createId(q.topicId);
-        this.questionList.push(q);
+        if (this.questionList) {
+            this.questionList.push(q);
+        } else {
+            this.questionList = [];
+            this.questionList.push(q);
+        }
+
         return this.http.put("https://questionary-d6795.firebaseio.com/questions.json", this.questionList)
-            .pipe(map(v => 'added'));
+            .pipe(map(v => id));
 
     }
 
@@ -246,11 +258,10 @@ export class TempoDataSource {
 
     }
 
-    editQuestion(q: QuestionAnswer): Observable<string> {
-        console.log("on add question");
+    editQuestion(q: QuestionAnswer, toDo: string): Observable<string> {
         this.replaceQuestion(q);
         return this.http.put("https://questionary-d6795.firebaseio.com/questions.json", this.questionList)
-            .pipe(map(v => "changed"));
+            .pipe(map(v => toDo));
 
     }
 
@@ -258,22 +269,23 @@ export class TempoDataSource {
 
     private onRemoveQuestion(q: QuestionAnswer) {
         const index = this.questionList.indexOf(q);
-        console.log(index);
         this.questionList.splice(index, 1);
     }
 
     private createId(topicId: string): string {
         let id = "q1";
-        const newList = this.questionList.filter(function (item, index, array) {
-            return item.topicId == topicId;
-        });
-        if (newList.length > 0) {
-            let idArr = [];
-            newList.forEach(item => idArr.push(Number(item.id.substring(1))));
-            let max = idArr.reduce(function (a, b) {
-                return Math.max(a, b) + 1;
+        if (this.questionList) {
+            const newList = this.questionList.filter(function (item, index, array) {
+                return item.topicId == topicId;
             });
-            id = "q" + max;
+            if (newList.length > 0) {
+                let idArr = [];
+                newList.forEach(item => idArr.push(Number(item.id.substring(1))));
+                let max = idArr.reduce(function (a, b) {
+                    return Math.max(a, b) + 1;
+                });
+                id = "q" + max;
+            }
         }
         return id;
     }
@@ -281,6 +293,44 @@ export class TempoDataSource {
     private replaceQuestion(q: QuestionAnswer) {
         const index = this.questionList.indexOf(q);
         this.questionList.splice(index, 1, q);
+
+    }
+
+    sendMessage(message: Message): Observable<string> {
+        if (this.messageList) {
+            this.messageList.push(message);
+        } else {
+            this.messageList = [];
+            this.messageList.push(message);
+        }
+        return this.http.put("https://questionary-d6795.firebaseio.com/messages.json", this.messageList)
+            .pipe(map(val => "done"));
+    }
+    // for admin
+    getMessages(user: User) {
+        let obs = this.http.get("https://questionary-d6795.firebaseio.com/messages.json");
+        const emptyArray = from(<Array<Message>>[]);
+        return obs.pipe(
+            tap(val => {
+                this.messageList = <Array<Message>>val
+                console.log("get array");
+                console.log(this.messageList);
+            }
+            ),
+            mergeMap(val => {
+                if (val) { return from(<Array<Message>>val) }
+                else {
+                    return emptyArray
+                }
+            }
+            ),
+            filter(val => val['_reciever'] == 'admin'),
+            toArray(),
+
+        );
+
+        // mergeMap(val => iif(() => val.length == 0,
+        //     of([new QuestionAnswer("n/a", "n/a", "n/a")]), of(val))));
 
     }
 

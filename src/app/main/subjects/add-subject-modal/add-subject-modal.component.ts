@@ -1,7 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
-import { Subj } from 'src/app/model/subj.model';
-import { PageService } from 'src/app/model/page.service';
+import { PageService } from 'src/app/model/models/page.service';
 
 @Component({
   selector: 'app-add-subject-modal',

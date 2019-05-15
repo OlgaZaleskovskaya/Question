@@ -1,13 +1,22 @@
 li.selected{
     color: white;
-    background-color: rgb(72, 89, 131);
-    border-color: rgb(77, 164, 245);
+    background-color: rgb(235, 94, 94);
+  border-left: 1px solid rgb(182, 217, 250);
 }
-li{
+nav{
+
+   background-color: rgb(72, 87, 124);
+}
+li {
     cursor: pointer;
-    padding: 4px 8px ;
     font-size: 0.8rem;
-    border: 2px solid rgb(182, 217, 250);
+    font-weight: 300;
+    margin-left: 2px;
+ 
+  
+   color: white;
+   padding:4px 10px 4px 4px;
+   
 }
 
 nav.main{

@@ -1,0 +1,20 @@
+<div class="container">
+
+    <ul class="nav m-3">
+      <li class="nav-item">
+        <a routerLink="./" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="./letters" routerLinkActive="active" class="m-2 bold">My letters</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="./users" routerLinkActive="active">Users</a>
+
+      </li>
+      <li class="nav-item">
+        <a routerLink="./questions" routerLinkActive="active">Questions</a>
+      </li>
+ </ul>
+  <router-outlet></router-outlet>
+
+</div>

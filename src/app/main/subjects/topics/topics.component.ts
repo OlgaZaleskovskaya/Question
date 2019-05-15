@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { QuestionRepository } from 'src/app/model/question.repository';
-import { Topic } from 'src/app/model/topic.model';
-import { PageService } from 'src/app/model/page.service';
-import { SubSubject } from 'src/app/model/subSubject.model';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Topic } from 'src/app/model/models/topic.model';
+import { PageService } from 'src/app/model/models/page.service';
+import { SubSubject } from 'src/app/model/models/subSubject.model';
+
 
 @Component({
   selector: 'app-topics',
@@ -23,7 +23,7 @@ export class TopicsComponent implements OnInit, OnChanges {
   toDo: string;
   currentName: string;
 
-  constructor(private repo: QuestionRepository, private pageService: PageService) {
+  constructor(private repo: QuestionRepository,  public pageService: PageService) {
 
   }
 

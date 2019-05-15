@@ -1,5 +1,7 @@
-div.answer {
-height: 5px;
+section{
+    height: auto;
+    padding:5px;
+   border-bottom: 1px dashed rgb(228, 227, 227);
 }
 
 div.mainDiv{
@@ -8,13 +10,15 @@ div.mainDiv{
     border-right: 0;
 }
 
-div.question{
+p.question{
     cursor:pointer;
+    color:#5A6EA1;
+    border-bottom: 1px solid #5A6EA1;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.25), 0 2px 2px rgba(0,0,0,0.22);
 }
 
 div.answer{
 overflow: auto;
-
 }
 
 button.but{
@@ -32,4 +36,9 @@ button.but{
     -webkit-box-shadow: 0 5px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
          box-shadow: 0 5px 3px -3px #777;
+ }
+
+ button.like {
+    background-color:rgb(235, 94, 94);
+color: white;
  }

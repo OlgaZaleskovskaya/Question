@@ -5,16 +5,21 @@
 
   <div class="form-group m-3">
     <label for="question">Question</label>
-    <textarea class="form-control" name="quesion" [(ngModel)]="question.question" id="question">
+    <textarea class="form-control" name="quesion" [(ngModel)]="question.questionShort" id="question">
 
     </textarea>
+    <textarea class="form-control" name="quesion" [(ngModel)]="question.questionLong" id="question">
+
+      </textarea>
 
   </div>
-  <div class="form-group m-1">
+  <!-- <div class="form-group m-1">c
     <label for="answer">Answer</label>
-    <textarea  [froalaEditor] id="answer" rows="15" class="form-control" name="answer"
+ <textarea  [froalaEditor] id="answer" rows="15" class="form-control" name="answer"
       [(ngModel)]="question.answer" [(froalaModel)]="editorContent"></textarea>
-  </div>
+      <textarea  [froalaEditor] id="answer" rows="15" class="form-control" name="answer"
+      [(ngModel)]="question.answer[0][1]" ></textarea>
+  </div> -->
 
   <!-- <div class="text-center" >
             <p >Add new topic to {{currentTopic.name | uppercase}}</p>

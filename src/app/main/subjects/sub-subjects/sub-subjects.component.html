@@ -1,7 +1,7 @@
 <div class="container border ">
   <div class="row">
   
-    <nav class="navbar navbar-expand-sm  main col-9">
+    <nav class="navbar navbar-expand-sm  main col-12">
       <ul class="navbar-nav">
         <li [class.selected]="item.id == currentId" class="nav-item " *ngFor="let item of subSubjectList; let i = index" (click)="onSelect(item.id, item)">
       {{item.name | uppercase}}
@@ -10,7 +10,7 @@
     </nav>
     
     <div class="my-auto col-3 text-right">
-        <div class="dropdown " *ngIf="pageService.isLogin && !isOpened">
+        <div class="dropdown " *ngIf="pageService.isAdmin && !isOpened">
           <button class="btn btn-sm but dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false">
             Manage Subcategories

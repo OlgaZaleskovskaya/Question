@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Question } from './question.model';
 import { TempoDataSource } from './tempo.datasourse';
-import { Subj } from './subj.model';
-import { Observable, from, Subject } from 'rxjs';
-import { Topic } from './topic.model';
+import { Subj } from './models/subj.model';
+import { Observable, from, Subject, ObjectUnsubscribedError } from 'rxjs';
+import { Topic } from './models/topic.model';
 import { of } from 'rxjs';
 import { tap, map, mergeMap } from 'rxjs/operators';
-import { SubSubject } from './subSubject.model';
-import { HttpClient } from 'selenium-webdriver/http';
-import { namespaceMathML } from '@angular/core/src/render3';
-import { QuestionAnswer } from './QuestionAnswer.model';
+import { SubSubject } from './models/subSubject.model';
+import { QuestionAnswer } from './models/QuestionAnswer.model';
+import { PageService } from './models/page.service';
 
 @Injectable()
 export class QuestionRepository {
@@ -17,16 +16,18 @@ export class QuestionRepository {
     private subjects: Subj[];
     private subSubjects: SubSubject[];
     private topics: Topic[];
-    getNumber: Subject<number>;
+    pages: number;
+
+    getPageNumber: Subject<number>;
     token: string;
     subjectSubscribe = new Subject<Subj[]>();
     subSubSubscribe = new Subject<SubSubject[]>();
     topicSubscribe = new Subject<Topic[]>();
 
 
-    constructor(private data: TempoDataSource
+    constructor(private data: TempoDataSource, private pageService: PageService
     ) {
-        this.getNumber = new Subject<number>();
+        this.getPageNumber = new Subject<number>();
         this.subjects = [];
     }
 
@@ -59,9 +60,15 @@ export class QuestionRepository {
     }
 
 
-    getQuestions(topicId: string): Observable<QuestionAnswer[]> {
-        return this.data.getQuestions(topicId);
+    getQuestions(topicId: string, pageNumber: number, pageSize: number): Observable<QuestionAnswer[]> {
+        return this.data.getQuestions(topicId, pageNumber, pageSize)
+            .pipe(tap(val => this.getPageNumber.next(Math.ceil(val['amount'] / pageSize))),
+
+                map(val => <QuestionAnswer[]>val['array']));
     }
+
+
+
 
     addSubject(subj: Subj, toDo: string): Observable<string> {
         switch (toDo) {
@@ -88,19 +95,6 @@ export class QuestionRepository {
     }
 
 
-
-    // saveSubjects() {
-    //     return this.data.saveSubj()
-    //         .pipe(
-    //             tap(val => {
-    //                 this.token = val['name'];
-    //             }
-    //             ));
-    // }
-    // saveSubSubs() {
-    //     return this.data.saveSubSubs();
-
-    // }
 
     private isInside<T>(name: string, arr: Array<T>): boolean {
         let res = false;
@@ -170,15 +164,17 @@ export class QuestionRepository {
         return this.data.saveQuestions();
     }
 
-    addQuestion(q: QuestionAnswer, toDo: string): Observable<string> {
-        console.log("repo on addQuestion");
-        console.log(toDo);
+    addQuestion(q: QuestionAnswer, toDo: string, subjects:string[]): Observable<string> {
         switch (toDo) {
-            case ('add'): { return this.data.addQuestion(q); }
+            case ('add'): {
+                console.log("repo");
+                return this.data.addQuestion(q); }
                 break;
             case ('remove'): { return this.data.removeQuestion(q); }
                 break;
-            case ('edit'): { return this.data.editQuestion(q); }
+            case ('edit' ||'answer' || 'like'): { return this.data.editQuestion(q, toDo); }
+                break;
+            case ('newTopic'): { return this.data.editQuestion(q, toDo); }
                 break;
         }
     }

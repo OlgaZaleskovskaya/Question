@@ -1,0 +1,152 @@
+<div class="container">
+
+    <!-- <p>Hi, {{authService.currentUser.name}} </p> -->
+    <p>Today is {{myDate| date}}</p>
+    <div class="row">
+        <div class="col-9 border rounded ">
+            <div class="row">
+                <p class=" col-10">Questions to check</p>
+
+            </div>
+            <article *ngFor="let item of questionList; let i = index">
+                <div class="row m-1 shadow " (click)="openAnswers(i)" [class.selected]="currentQuestionIndex == i">
+                    <div class="question col-10  p-1">
+                        <p class="font-italic small">{{item.subject}}
+                            <i class="fas fa-arrow-right"></i>
+                            {{item.subSubject}}
+                            <i class="fas fa-arrow-right"></i>{{item.topic}}
+                        </p>
+                        <p> <span>{{i+1}}.&nbsp;</span>{{item.question}}</p>
+                        <div class="qArea" *ngIf="isEditQuestion && currentQuestionIndex == i" @myInsertRemoveTrigger>
+                            <textarea autofocus name="quest" id="quest" cols="90" rows="5"
+                                [(ngModel)]="currentQuestion.question"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-2 question text-center p-1">
+                        <p class="font-italic small">{{item.lastVersion | date }}&nbsp;
+                            <span *ngIf="!item.published" data-toggle="tooltip" title="New!"
+                                class="badge  badge-pill badge-danger">!</span>
+                            <span *ngIf="item.published" data-toggle="tooltip" title="New Answer!"
+                                class="badge  badge-pill badge-primary">!</span>
+                            <br>
+                            <span data-toggle="tooltip" title="Author!">{{item.author}}</span>
+                        </p>
+
+                        <div *ngIf="!item.published">
+                            <button data-toggle="tooltip" [disabled]="currentQuestionIndex  != i"
+                                title="Publish question" type="button" class="btn btn-sm but"
+                                (click)="onSubmitQuestion(i)" *ngIf = "!isEditQuestion">
+                                <i class="fas fa-upload"></i></button>
+                            <button data-toggle="tooltip" [disabled]="currentQuestionIndex  != i" title="Edit question"
+                                type="button" class="btn btn-sm but" *ngIf = "!isEditQuestion" (click)="isEditQuestion = !isEditQuestion">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button data-toggle="tooltip" *ngIf = "!isEditQuestion" [disabled]="currentQuestionIndex  != i"
+                                title="Remove question" type="button" class="btn btn-sm but"
+                                (click)="onRemoveQuestion(i, item)">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                            <button data-toggle="tooltip" *ngIf = "isEditQuestion" title="Ok changes"  type="button"
+                            class="btn btn-sm but" (click)="onOkQuestionChanges(i)">
+                            <i class="far fa-check-square"></i>
+                        </button>
+                        <button data-toggle="tooltip" *ngIf = "isEditQuestion" title="Cancel changes" type="button"
+                            class="btn btn-sm but" (click)="onCancelQuestionQuestion(i)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="answers" *ngIf="isOpenedAnswer == i">
+                    <section *ngFor="let ans of item.answer; let k = index" class=" m-3">
+
+                        <ng-container *ngTemplateOutlet="(editAnswer1 && currentAnswerIndex == k) ? editMode: readMode">
+                        </ng-container>
+
+                        <ng-template #readMode>
+                            <div (click)="onSelectAnswer(k)" class="row">
+                                <div class="col-10">
+                                    <span class="font-italic small"> {{myDate| date}}</span>&nbsp;<span *ngIf="!ans[4]"
+                                        data-toggle="tooltip" title="New!"
+                                        class="badge  badge-pill badge-danger">!</span> <br>
+                                    <p> {{ans[2]}}</p>
+
+                                </div>
+                                <div class="col-2">
+                                    <div *ngIf="!ans[4]">
+                                        <button data-toggle="tooltip" title="Publish answer" type="button"
+                                            class="btn btn-sm but" (click)="editQuestion = !editQuestion">
+                                            <i class="fas fa-upload"></i>
+                                        </button>
+                                        <button data-toggle="tooltip" title="Edit answer" type="button"
+                                            class="btn btn-sm but" (click)="editAnswer1 = !editAnswer1">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button data-toggle="tooltip" title="Remove answer" type="button"
+                                            class="btn btn-sm but" (click)="onSubmitQuestion(i)">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                        <button data-toggle="tooltip" title="Ok changesit"  type="button"
+                                            class="btn btn-sm but" (click)="onOkQuestionChanges(i)">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+                                        <button data-toggle="tooltip" title="Cancel changes" type="button"
+                                            class="btn btn-sm but" (click)="onCancelQuestionChanges(i)">
+                                            <i class="far fa-trash-alt"></i>
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                        <ng-template #editMode>
+                            <div class="row">
+                                <div class="col-11 ">
+                                    <textarea [froalaEditor] id="answerNew" rows="15" class="form-control"
+                                        name="answerNew" placeholder="your answer"
+                                        [(ngModel)]="currentQuestion.answer[k][1]"></textarea>
+                                </div>
+
+
+                                <div class="col-1">
+                                    <button data-toggle="tooltip" title="Close" type="button" class="btn btn-sm but"
+                                        (click)="currentAnswerIndex = -1">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <button data-toggle="tooltip" title="Remove answer" type="button"
+                                        class="btn btn-sm but" (click)="onSubmitQuestion(i)">
+                                        <i class="far fa-trash-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-template>
+
+
+
+
+                    </section>
+                </div>
+            </article>
+        </div>
+
+
+        <div class="col-3 border rounded">
+            <div class="bg-info">
+                <p>Personal info</p>
+                <p>mail</p>
+                <p>name</p>
+                <p>status</p>
+                <button type="button">Change personal info</button>
+            </div>
+            <div class="bg-success">
+                <p>My letters</p>
+                <p>mail</p>
+                <p>name</p>
+                <p>status</p>
+                <button type="button">My letters</button>
+            </div>
+        </div>
+    </div>
+
+</div>

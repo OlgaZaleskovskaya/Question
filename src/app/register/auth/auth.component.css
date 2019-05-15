@@ -1,0 +1,18 @@
+button.but{
+    display: inline;
+    background-color:#007BFF;
+    color: white;
+    border: 1px solid rgb(182, 217, 250);
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+         box-shadow: 0 10px 6px -6px #777;
+         font-size: 0.8em;
+ }
+ button.but:hover{
+    background-color:rgb(76, 91, 129);
+    color: white;
+    border: 1px solid rgb(182, 217, 250);
+    -webkit-box-shadow: 0 5px 3px -3px #777;
+    -moz-box-shadow: 0 5px 3px -3px #777;
+         box-shadow: 0 5px 3px -3px #777;
+  }

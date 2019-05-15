@@ -1,24 +1,54 @@
 <div class = "container">
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-between">
-    <span class = "text-white"  bold>Все получится</span>
+  <div data-toggle="tooltip" title="Write to admin" *ngIf = "authService.isLoggedIn" 
+  class= "letter row justify-content-center align-items-center"><a [routerLink]="[{ outlets: { popup: ['compose'] } }]">
+      <i class="fa fa-envelope-open-o" aria-hidden="true"></i>
+    </a></div>
+      
+
+<nav class="navbar navbar-expand-sm navbar-dark justify-content-between">
+    <span class = "text-white" bold>{{name}} Все получится. Не сдавайся</span>
+
+  
     <ul class="navbar-nav">
-        <li *ngIf = "!pageService.isLogin" class="nav-item bg-info">
-            <a role = "button" class="btn btn-success m-1" >Sign Up</a>
+        <li *ngIf = "!authService.isLoggedIn" class="nav-item ">
+            <a role = "button" class=" m-1 but" (click) = "toLogin = true" >Login</a>
           </li>
-      <li *ngIf = "!pageService.isLogin" class="nav-item bg-info" (click)= "toSignIn()">
+      <!-- <li *ngIf = "!pageService.isLogin" class="nav-item bg-info" (click)= "toSignIn()">
         <a role = "button" class="btn btn-success m-1" >Sign In</a>
-      </li>
-     <li *ngIf = "pageService.isLogin" class="nav-item bg-info">
-        <a role = "button" class="btn btn-success m-1" >Log Out</a>
+      </li> -->
+     <li *ngIf = "authService.isLoggedIn" class="nav-item mr-2">
+        <a role = "button" class="m-1 but"(click)= "authService.isLoggesIn = false" >Log Out</a>
       </li> 
-      <li *ngIf = "pageService.isLogin" class="nav-item bg-info" (click) = "toEditMode()">
-        <a role = "button" class="btn btn-success m-1" > Edit</a> 
+     <!-- <li *ngIf = "authService.isLoggedIn == 'admin'" class="nav-item " >
+        <a  routerLink="/admin" routerLinkActive="active" >Admin</a> 
+      </li>  -->
+      <li *ngIf = "authService.isLoggedIn && !authService.inCabinet" class="nav-item " >
+          <a  class = "m-1 but" routerLinkActive="active" (click) ="this.pageService.isLogin = true">Edit</a> 
+        </li> 
+        <li  *ngIf = "authService.isLoggedIn && authService.inCabinet"  class="nav-item " (click)="authService.inCabinet = false" >
+            <a  class = "text-white m-1 but" 
+            routerLink="/" 
+            data-toggle="tooltip" title="To main page" routerLinkActive="active" >Home</a> 
+          </li> 
+      <li  *ngIf = "authService.isLoggedIn == 'admin'"  class="nav-item " (click) ="authService.inCabinet = true" >
+        <a  class = "text-white m-1 but" 
+        routerLink="/admin" 
+        data-toggle="tooltip" title="To admin panel" routerLinkActive="active" >Admin</a> 
       </li> 
+      <li *ngIf = "authService.isLoggedIn != 'admin' && authService.isLoggedIn" 
+      class="nav-item " data-toggle="tooltip" title="To personal page"  (click) ="authService.inCabinet = true" >
+          <a  class = "text-white m-1 but" routerLink="/user" routerLinkActive="active" >Cabinet</a> 
+        </li> 
+
     </ul>
-   <button type ="button" (click)="push()">push</button>
+
   </nav>
   
- <router-outlet></router-outlet>
+ 
+<router-outlet></router-outlet>
+<router-outlet name="popup"></router-outlet>
+ <app-register (onCancelAuth) = "onCancelAuth($event)" 
+ *ngIf = "toLogin && !authService.isLoggedIn"></app-register>
 </div>
 <!-- <app-main *ngIf = "!isSignIn"></app-main>
  <app-edit *ngIf = "isSignIn"></app-edit> -->

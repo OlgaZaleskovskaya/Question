@@ -1,38 +1,49 @@
 <div class="container">
-   <p>{{pageService.currentSubject.name}}->{{pageService.currentSubSubject.name}} -> {{pageService.currentTopic.name}}
-  </p>
+  <div class="row h-100 justify-content-center align-items-top p-0">
+    <div class="col-9 ml-1" *ngIf="pageService.currentSubject 
+  && pageService.currentSubSubject 
+  && pageService.currentTopic">
+      <span>{{currentSubjectName}}->{{currentSubSubjectName}} -> {{currentTopicName}}</span>
+      <!-- <button type="button" class="btn but btn-sm mt-3" *ngIf="pageService.isLogin" (click)="showModal()">New
+      Question</button> -->
+      <button type="button" data-toggle="tooltip" title="To current topic" *ngIf="pageService.isLogin"
+        class="btn but btn-sm d-block" (click)="showModal()">Add
+        Question</button>
+    </div>
 
-  <app-question [question]="item" [index]=i 
-  (onRemoveQuestion)="onRemoveQuestion($event)"
-    (onEditQuestion)="onEditQuestion($event)"
-     *ngFor="let item of questionList  | async; let i = index">
+    <div class=" col-2">
+      <span>Questions/page</span>
+      <select id="sel" class="form-control-sm " [value]=pageSize (change)="changePageSize($event.target.value)">
+        <option value="3">3</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="10000">All</option>
+      </select>
+    </div>
+  </div>
+  <app-question [question]="item" [index]=i (onRemoveQuestion)="onRemoveQuestion($event)"
+    (onEditQuestion)="onEditQuestion($event)" *ngFor="let item of questionList; let i = index">
   </app-question>
   <!-- pagination -->
-
-  <!-- <div class="bg-light">
-   <div class="form-group">
-            <label for="questionsPerPage">Questions Per Page</label>
-            <input type="text" 
-            class="form-control" 
-            [(ngModel)] = "pageSize" 
-            id="questionsPerPage">
-        </div>
-        <div class="btn-group mt-2">
-            <button type="button" 
-            class="btn btn-outline-danger" 
-            [class.active]="page == selectedPageNumber"
-                *ngFor="let page of pages" 
-                (click)="changePage(page)">{{page}}</button>
-        </div> 
-        </div> -->
+  <div>
+    <div class="btn-group mt-2">
+      <button type="button" class="btn btn-sm but-pages" [class.activeButton]="page == selectedPageNumber"
+        *ngFor="let page of pages" (click)="changePage(page)">{{page}}</button>
+    </div>
+  </div>
   <div class="my-auto ">
-    <button type="button" class="btn but btn-sm mt-3" *ngIf="pageService.isLogin" (click)="showModal()">New
-      Question</button>
+
 
     <!-- for adding new question -->
-    <app-edit-question-modal [currentMessage]="message" [question]="empty" *ngIf="isOpened"
+    <!-- <app-edit-question-modal [currentMessage]="message" [question]="empty" *ngIf="isOpened"
       (onSubmit)="onSubmit($event)" (onCancel)="onCancel($event)">
-    </app-edit-question-modal>
-
+    </app-edit-question-modal> -->
+    <div *ngIf="isOpened" @myInsertRemoveTrigger>
+      <app-add-question *ngIf="isOpened" [question]='empty' (onAddQuestion)="onAddQuestion($event)"
+        (onCancel)="onCancel($event)"></app-add-question>
+    </div>
   </div>
 </div>

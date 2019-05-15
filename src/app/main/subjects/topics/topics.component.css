@@ -1,25 +1,29 @@
 li.selected{
     color: white;
-    background-color:rgb(90, 110, 161);
-    border-color: rgb(77, 164, 245);
-    
+    background-color: rgb(72, 87, 124);
+    border-left: 5px solid rgb(182, 217, 250);
+
+}
+li{
+    border-left: 5px solid rgb(72, 87, 124);
+    border-right: none;
+    box-sizing: border-box;
 }
 p {
     cursor: pointer;
 }
 .mainDiv{
-position: relative;
+    position: relative;
 
-border-top: 1px solid rgb(90, 110, 161);
 }
 
 .itemList{
-border-right: 1px solid rgb(90, 110, 161);
+    padding:2px;
 
 }
 
 button.but{
-    background-color:#007BFF;
+    background-color: rgb(72, 87, 124);
     color: white;
     border: 1px solid rgb(182, 217, 250);
     -webkit-box-shadow: 0 10px 6px -6px #777;
@@ -29,7 +33,7 @@ button.but{
  }
  
  button.selectedButton{
-    background-color: rgb(52, 64, 94);
+    background-color: rgb(72, 87, 124);
     -webkit-box-shadow: 0 5px 6px -6px #777;
     -moz-box-shadow: 0 10px 6px -6px #777;
          box-shadow: 0 5px 3px -3px #777;

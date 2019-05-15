@@ -1,14 +1,43 @@
 <div class="modal1 rounded">
-  <div class="text-center" >
-      <p >Add new topic to {{currentTopic.name | uppercase}}</p>
-      <input type="text" (change)="question = $event.target.value;" /> 
-      <input type="text" (change)="answer = $event.target.value;" /> 
+
+  <div class="text-center m-2">
+    <h5 class="mt-2">New question </h5>
+    
+    <button type="button" class="btn but btn-sm" *ngIf="!newCategory" (click)="newCategory= !newCategory">Create new
+      topic</button>
+    <form #f="ngForm" (ngSubmit)="onSubmit(f)">
+      <div *ngIf="newCategory" class="form-group">
+        <input type="text" class="form-control" placeholder="eg: 'PHP'" id="newSubj" [(ngModel)]="newSubj"
+          name="newSubj">
+      </div>
+      <div *ngIf="newCategory" class="form-group">
+        <input type="text" class="form-control" placeholder="eg: 'PHP v.7'" id="newSubjSubj" [(ngModel)]="newSubjSubj"
+          name="newsubjSubj">
+      </div>
+      <div *ngIf="newCategory" class="form-group">
+        <input type="text" class="form-control" placeholder="eg: 'Dectructor'" id="newTopic" [(ngModel)]="newTopic"
+          name="newTopic">
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" 
+          placeholder="your question" required id="question" [(ngModel)]="questionQuestion" name="question">
+      </div>
+      <div class="form-group" >
+          <textarea [froalaEditor] id="answer" rows="15" class="form-control" name="answer" placeholder="your answer"
+            [(ngModel)]="answer"></textarea>
+        </div>
+      
+      <div class="form-group" *ngIf="addAnswer">
+        <textarea [froalaEditor] id="answerNew" rows="15" class="form-control" name="answerNew" placeholder="your answer"
+          [(ngModel)]="answerNew"></textarea>
+      </div>
+      <div class="text-center">
+        <!-- <button type="button" class="btn but btn-sm" (click)="addAnswer = true">Add answer</button> -->
+        <button type="submit" class="btn but btn-sm">OK</button>
+        <button type="button" class="btn but btn-sm" (click)="cancel()">Cancel</button>
+      </div>
+    </form>
+
   </div>
-
-<div class="text-center">
-  <button type="button"  class="btn but btn-sm" (click)="onSubmit()">OK</button>
-  <button type="button" class="btn but btn-sm" (click)="onCancel()">Cancel</button>
-</div>
-
 </div>
 <div class="overlay"></div>

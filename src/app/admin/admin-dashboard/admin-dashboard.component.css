@@ -1,0 +1,62 @@
+div.question{
+cursor: pointer;
+
+border-top: 1px solid rgb(115, 139, 199);
+color: rgb(72, 87, 124);
+}
+
+div.selected{
+    cursor: pointer;
+ 
+    border-top: 1px solid rgb(115, 139, 199);
+    color: rgb(72, 87, 124);
+    background-color: rgba(145, 176, 253, 0.137);
+    }
+
+div.qArea{
+    height: 150px;
+}
+div.shadow{
+    box-shadow: 0 3px 7px rgba(0,0,0,0.25), 0 2px 2px rgba(0,0,0,0.22);
+}
+
+section{
+    border-bottom: 1px dotted rgb(115, 139, 199);
+    padding-bottom: 5em;
+}
+
+
+div.form-check{
+    border-bottom: 1px solid grey;
+    
+}
+
+button.but{
+    background-color:rgb(72, 87, 124);
+    color: white;
+    border: 1px solid rgb(182, 217, 250);
+    -webkit-box-shadow: 0 10px 6px -6px #777;
+    -moz-box-shadow: 0 10px 6px -6px #777;
+         box-shadow: 0 10px 6px -6px #777;
+         border-radius: 10%;
+ }
+
+ button.but:hover{
+    background-color:rgb(76, 91, 129);
+    color: white;
+    border: 1px solid rgb(182, 217, 250);
+    -webkit-box-shadow: 0 5px 3px -3px #777;
+    -moz-box-shadow: 0 5px 3px -3px #777;
+         box-shadow: 0 5px 3px -3px #777;
+ }
+ 
+ button.selectedButton{
+    background-color:rgb(235, 94, 94);
+    -webkit-box-shadow: 0 5px 3px -3px #777;
+    -moz-box-shadow: 0 5px 3px -3px #777;
+         box-shadow: 0 5px 3px -3px #777;
+ }
+
+ section:last-of-type{
+     border-bottom: 5px solid rgb(223, 222, 222);
+ }

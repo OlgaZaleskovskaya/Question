@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { SubSubject } from 'src/app/model/subSubject.model';
+import { SubSubject } from 'src/app/model/models/subSubject.model';
 
 @Component({
   selector: 'app-add-subsubject-modal',

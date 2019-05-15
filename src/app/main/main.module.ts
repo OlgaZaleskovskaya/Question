@@ -20,8 +20,11 @@ import { EditQuestionModalComponent } from './subjects/topics/questions/question
 import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
 import { DropDownDirective } from '../model/dropdown.directive';
 import { HighLightDirective } from '../model/highlight.directive';
+import { AddAnswerComponent } from './subjects/topics/questions/question/add-answer/add-answer.component';
 
-
+let routing = RouterModule.forChild([
+  { path: "main", component: MainComponent}
+]);
 
 @NgModule({
   declarations: [
@@ -37,14 +40,15 @@ import { HighLightDirective } from '../model/highlight.directive';
     AddQuestionComponent,
     EditQuestionModalComponent,
     DropDownDirective,
-    HighLightDirective
+    HighLightDirective,
+    AddAnswerComponent
   ],
   imports: [
     CommonModule,
     BrowserAnimationsModule,
     FormsModule,
     RouterModule,
-    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot()
+    FroalaEditorModule.forRoot(), FroalaViewModule.forRoot(),routing
   ],
   exports: [
     MainComponent,
@@ -52,7 +56,6 @@ import { HighLightDirective } from '../model/highlight.directive';
     TopicsComponent,
     QuestionsComponent,
     QuestionComponent
-
   ],
 
   providers:
@@ -61,4 +64,5 @@ import { HighLightDirective } from '../model/highlight.directive';
 
     ]
 })
+
 export class MainModule { }

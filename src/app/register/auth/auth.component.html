@@ -1,0 +1,28 @@
+<div class="container border rounded shadow">
+
+  <div class="bg-danger p-1 mt-1 text-center" *ngIf="errorMessage != null">
+    <p>{{errorMessage}}</p>
+  </div>
+  <div class="p-1">
+    <fieldset class="scheduler-border">
+      <h5 class="text-center">Log In</h5>
+      <form novalidate #form="ngForm" (ngSubmit)="authenticate(form)">
+        <div class="form-group">
+          <label for="email">Name</label>
+          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="email" required />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="text" class="form-control" id="password" name="password" [(ngModel)]="password" required />
+        </div>
+
+
+        <div>
+          <button class="btn but btn-sm" (click)="onSignUp()" type="button"> No account?</button>
+          <button class="btn but btn-sm" type="submit">Log In</button>
+          <button class="btn but btn-sm" type="button" (click)="onCancel()">Cancel</button>
+        </div>
+      </form>
+    </fieldset>
+  </div>
+</div>

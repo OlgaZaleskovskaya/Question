@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { PageService } from '../model/page.service';
-import { TempoDataSource } from '../model/tempo.datasourse';
+import { PageService } from '../model/models/page.service';
+import { AuthService } from '../model/services/auth.service';
+import { User } from '../model/models/user.model';
 
 
 @Component({
@@ -11,35 +12,35 @@ import { TempoDataSource } from '../model/tempo.datasourse';
 
 })
 export class HeaderComponent implements OnInit {
-  isLogIn: boolean;
+  register: boolean;
+  isLogin: boolean;
   tempo: string;
-obj = {
-  name: "Misha",
-  login: false
-}
+  currentUser: User;
+  name: string;
+  toLogin: boolean;
 
 
-  constructor(private pageService: PageService, private data: TempoDataSource) {
-    this.isLogIn = this.pageService.isLogin;
-    this.tempo = this.pageService.tempo["name"];
-    this.obj.login =  this.pageService.isLogin;
-    this.obj.name =  this.pageService.tempo["name"];
+
+  constructor(public pageService: PageService, private authService: AuthService) {
+    this.currentUser = new User('null', ' null', 'user', 'null');
+    this.name = null;
   }
 
 
   ngOnInit() {
-
+    this.isLogin = false;
+    this.toLogin = false;
+    this.authService.onLogin.subscribe(response => this.isLogin = response);
+    this.authService.onUser.subscribe(response => this.name = (response['name'] + '!'));
   }
-  toSignIn() {
+
+
+  toEditMode() {
     this.pageService.isLogin = true;
-    this.pageService.tempo["name"] = "petya";
-  
-   
-    
   }
 
- push(){
- this.data.pushSubj().subscribe(response => console.log(response));
-   }
+  onCancelAuth(close: boolean) {
+    this.toLogin = false;
+  }
 
 }

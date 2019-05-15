@@ -6,27 +6,17 @@ import { Topic } from './topic.model';
 
 @Injectable()
 export class PageService {
-    private questionsOnPage: number;
     private _isLogin: boolean = false;
-    currentSubject: Subj;
-    currentSubSubject: SubSubject;
-    currentTopic: Topic;
-   tempo = {
-       name: "vasya"
-   }
-
+    private _isAdmin:  boolean = false;
+    public currentSubject: Subj;
+    public currentSubSubject: SubSubject;
+    public currentTopic: Topic;
+   
+  tempo = "vasya";
     constructor() {
-        this.questionsOnPage = 1;
-
-
-    }
-    getQuestionsOnPage(): number {
-        return this.questionsOnPage;
+        
     }
 
-    setQuestionsOnPage(n: number): void {
-        this.questionsOnPage = n;
-    }
 
     get isLogin(): boolean {
         return this._isLogin;
@@ -35,6 +25,14 @@ export class PageService {
     set isLogin(p: boolean) {
         this._isLogin = p;
     }
+    get isAdmin(): boolean {
+        return this._isAdmin;
+    }
+
+    set isAdmin(p: boolean) {
+        this._isAdmin = p;
+    }
+
 
    
 }

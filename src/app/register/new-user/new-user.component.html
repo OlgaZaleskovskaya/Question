@@ -1,0 +1,69 @@
+<div class = "container border rounded shadow" >
+<div class='row m-5 '>
+    <div class='col-12'>
+       
+      <form class = " pt-3"[formGroup]="registrationForm"
+       (ngSubmit)="registrationForm.valid && submitRegistration(registrationForm.value)" novalidate>
+       <fieldset class="form-group">
+              <span >User Type
+              </span>
+              <select id="type" formControlName="type" id = "type" class ="form-control">
+               <option disabled value="null">Choose user type</option>
+               <option *ngFor="let item of userTypes">{{item}}</option>
+             </select>
+             <div class='form-text error' *ngIf="registrationForm.controls.type.touched">
+                <div *ngIf="registrationForm.controls.type.hasError('required')">Choose user type</div>
+              </div> 
+        </fieldset>
+
+       <fieldset class="form-group">
+          <span>Name</span>
+          <input type="text" class="form-control" placeholder="Name" formControlName="name">
+          <div class='form-text error' *ngIf='registrationForm.controls.name.touched'>
+            <div *ngIf="registrationForm.controls.name.hasError('required')">Name is required.</div>
+            <div *ngIf="registrationForm.controls.name.hasError('minlength')">Name should be longer than 3 symbols</div>
+          </div>
+        </fieldset>
+  
+        <fieldset class="form-group">
+          <span>Login</span>
+          <input type="text" class="form-control" placeholder="Login" formControlName="login">
+          <div class='form-text error' *ngIf='registrationForm.controls.login.touched'>
+            <div *ngIf="registrationForm.controls.login.hasError('required')">ogin is required.</div>
+          </div>
+        </fieldset> 
+        
+        <fieldset class="form-group">
+          <span>E-Mail</span>
+          <input type="email" class="form-control" placeholder="E-mail" formControlName="email" id = "e-mail">
+          <div class="form-text error" *ngIf="registrationForm.controls.email.touched">
+            <div *ngIf="registrationForm.controls.email.hasError('required')">Email is required.</div>
+            <div *ngIf="registrationForm.controls.email.hasError('invalidEmail')">Email is invalid.</div>
+          </div>
+        </fieldset>
+
+  
+        <fieldset class="form-group">
+          <span>Password</span>
+          <input type="password" class="form-control" placeholder="Password" minlength='6' formControlName="password">
+          <div class='form-text error' *ngIf="registrationForm.controls.password.touched">
+            <div *ngIf="registrationForm.controls.password.hasError('required')">Password is required.</div>
+            <div *ngIf="registrationForm.controls.password.hasError('minlength')">Password isn't long enough.</div>
+          </div>
+        </fieldset>
+    
+        <fieldset class="form-group">
+          <span>Confirm Password</span>
+          <input type="password" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword">
+          <div class='form-text error' *ngIf="registrationForm.controls.confirmPassword.touched">
+            <div *ngIf="registrationForm.hasError('mismatchedPasswords')">Passwords do not match.</div>
+          </div>
+        </fieldset>
+    
+        <button class='btn btn-primary' type='submit' [disabled]='!registrationForm.valid'>Sign Up </button>
+        <button class="btn but btn-sm" type="button" (click)="onCancel()">Cancel</button>
+      </form>
+   
+    </div>
+  </div>
+</div>

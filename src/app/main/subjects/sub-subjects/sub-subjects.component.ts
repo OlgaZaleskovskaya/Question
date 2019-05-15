@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { SubSubject } from 'src/app/model/subSubject.model';
+import { SubSubject } from 'src/app/model/models/subSubject.model';
 import { QuestionRepository } from 'src/app/model/question.repository';
-import { PageService } from 'src/app/model/page.service';
-import { Subj } from 'src/app/model/subj.model';
+import { PageService } from 'src/app/model/models/page.service';
+import { Subj } from 'src/app/model/models/subj.model';
 
 @Component({
   selector: 'app-sub-subjects',
@@ -21,7 +21,7 @@ export class SubSubjectsComponent implements OnInit {
   currentSubSubject: SubSubject;
   toDo: string;
 
-  constructor(private repo: QuestionRepository, private pageService: PageService) {
+  constructor(private repo: QuestionRepository,  public pageService: PageService) {
 
   }
 

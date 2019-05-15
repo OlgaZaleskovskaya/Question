@@ -1,0 +1,15 @@
+<ng-template #defaultTabButtons>
+    <div class="custom-class">
+        <button class="btn btn-success" (click)="login()">
+            gggg
+        </button>
+        <button class="btn btn-success" (click)="signUp()">
+            gggh
+        </button>
+    </div>
+
+</ng-template>
+<ng-container
+        *ngTemplateOutlet="headerTemplate ? headerTemplate: defaultTabButtons">
+
+</ng-container>

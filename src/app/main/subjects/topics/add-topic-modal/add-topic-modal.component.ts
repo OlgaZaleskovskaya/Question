@@ -1,8 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { SubSubject } from 'src/app/model/subSubject.model';
-import { toUnicode } from 'punycode';
-import { Topic } from 'src/app/model/topic.model';
-import { PageService } from 'src/app/model/page.service';
+import { SubSubject } from 'src/app/model/models/subSubject.model';
+import { Topic } from 'src/app/model/models/topic.model';
+import { PageService } from 'src/app/model/models/page.service';
 
 @Component({
   selector: 'app-add-topic-modal',
@@ -11,7 +10,7 @@ import { PageService } from 'src/app/model/page.service';
 })
 export class AddTopicModalComponent implements OnInit {
 
-  constructor(private pageService: PageService) { }
+  constructor(public pageService: PageService) { }
 
   @Input() currentName: string;
   @Output() onAddTopic = new EventEmitter<string>();

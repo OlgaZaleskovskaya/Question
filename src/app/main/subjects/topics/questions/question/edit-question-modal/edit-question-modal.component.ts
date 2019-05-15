@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { QuestionAnswer } from 'src/app/model/QuestionAnswer.model';
-import { Topic } from 'src/app/model/topic.model';
-import { PageService } from 'src/app/model/page.service';
+import { QuestionAnswer } from 'src/app/model/models/QuestionAnswer.model';
+import { Topic } from 'src/app/model/models/topic.model';
+import { PageService } from 'src/app/model/models/page.service';
 
 
 
@@ -17,18 +17,17 @@ export class EditQuestionModalComponent implements OnInit {
   @Input() currentMessage: string;
   @Output() onSubmit = new EventEmitter<QuestionAnswer>();
   @Output() onCancel = new EventEmitter<any>();
- currentTopicName: string;
-currentSubSubjectName: string;
+  currentTopicName: string;
+  currentSubSubjectName: string;
 
   constructor(private pageService: PageService) {
-   
+
   }
 
   ngOnInit() {
-   this.currentTopicName = this.pageService.currentTopic.name;
- this.currentSubSubjectName = this.pageService.currentSubSubject.name;
-    console.log("modal");
-    console.log(this.currentTopicName);
+    this.currentTopicName = this.pageService.currentTopic.name;
+    this.currentSubSubjectName = this.pageService.currentSubSubject.name;
+
   }
 
   submit() {

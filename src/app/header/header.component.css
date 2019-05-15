@@ -1,0 +1,32 @@
+nav{
+    background-color: #343A40;
+}
+a.but{
+    color: white;
+    font-style: italic;
+    cursor: pointer;
+}
+a.but:hover{
+    color: rgb(155, 206, 248);
+    font-style: italic;
+    }
+
+div.letter{
+   border-radius:50%;
+   position: fixed;
+   right:5em;
+   bottom:5em;
+   z-index: 100;
+   border: 1px solid white;
+    width: 3em;
+    height:3em;
+   background-color:rgb(235, 94, 94);
+   -webkit-box-shadow: 0 5px 3px -3px rgb(32, 32, 32); 
+   -moz-box-shadow: 0 5px 3px -3px rgb(32, 32, 32); 
+        box-shadow: 0 7px 5px -5px rgb(32, 32, 32); 
+    }
+
+    div.big{
+
+        font-size: 5em;
+    }

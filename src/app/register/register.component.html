@@ -1,0 +1,9 @@
+<div class="bg-light p-1 modalWindow">
+ <div [ngSwitch] ="signIn">
+
+    <app-new-user *ngSwitchCase = "false" (onCancelNewUser)="onCancelNewUser($event)"></app-new-user>
+    <app-auth *ngSwitchCase = "true" (toSignUp) = "toSignUp($event)"
+    (onCancelRegistration)="onCancelRegistration($event)"></app-auth>
+ </div>
+</div>
+<div class = "overlay"></div>

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { QuestionRepository } from 'src/app/model/question.repository';
-import { Subj } from 'src/app/model/subj.model';
-import { PageService } from 'src/app/model/page.service';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { Subj } from 'src/app/model/models/subj.model';
+import { PageService } from 'src/app/model/models/page.service';
+
 
 @Component({
   selector: 'app-subjects',
@@ -31,7 +31,7 @@ export class SubjectsComponent implements OnInit {
   }
 
 
-  constructor(private repo: QuestionRepository, private pageService: PageService) {
+  constructor(private repo: QuestionRepository,  public pageService: PageService) {
 
   }
 
